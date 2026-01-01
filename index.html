@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRAP - Realidades Crudas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-red-crudo: #f87171; /* Red 400 */
+            --color-yellow-crudo: #facc15; /* Yellow 400 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Darker than gray-900 for background */
+            color: #d1d5db; /* gray-300 */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* --- Custom Styles for Cards and Sections --- */
+        .hard-truth, .integration-cruda {
+            background-color: #1f2937; /* gray-800 */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #374151; /* gray-700 */
+        }
+
+        .reality-card {
+            background-color: #374151; /* gray-700 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .reality-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 20px rgba(248, 113, 113, 0.1); /* Slight red shadow on hover */
+        }
+        .cuerpo-card { border-left: 4px solid #4ade80; } /* green-400 */
+        .corazon-card { border-left: 4px solid #f87171; } /* red-400 */
+        .cabeza-card { border-left: 4px solid #60a5fa; } /* blue-400 */
+
+        /* --- Animations --- */
+        @keyframes breathe-crudo {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        .breathing-crudo {
+            animation: breathe-crudo 4s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(248, 113, 113, 0.4) 0%, rgba(248, 113, 113, 0) 70%);
+        }
+
+        @keyframes pulse-realidad {
+            0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
+        }
+        .pulse-realidad {
+            animation: pulse-realidad 2s infinite;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+<body class="hide-scrollbar">
+    <div id="root"></div>
+</body>
+</html>
