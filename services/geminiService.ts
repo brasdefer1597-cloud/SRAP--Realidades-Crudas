@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = process.env.API_KEY || '';
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export interface AnalysisInput {
   bleeding: string;
@@ -27,6 +28,10 @@ export const analyzeMisery = async (data: AnalysisInput): Promise<string> => {
       Usa un tono oscuro, filosófico y directo. Nada de "todo va a salir bien".
     `;
 
+    if (!ai) {
+      return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
+    }
+    
     // Use Flash for fast, direct analysis
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -60,6 +65,10 @@ export const analyzeSynthesis = async (synthesis: string): Promise<string> => {
       Usa un tono oscuro y directo. Sé implacable pero útil.
     `;
 
+    if (!ai) {
+      return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
+    }
+    
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
