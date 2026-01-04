@@ -32,7 +32,7 @@ export const analyzeMisery = async (data: AnalysisInput): Promise<string> => {
       Usa un tono oscuro, filosófico y directo. Nada de "todo va a salir bien".
     `;
 
-    const model = ai.getGenerativeModel({ 
+    const model = (ai as any).getGenerativeModel({ 
       model: 'gemini-1.5-flash',
       systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
     });
@@ -67,7 +67,7 @@ export const analyzeSynthesis = async (synthesis: string): Promise<string> => {
       Usa un tono oscuro y directo. Sé implacable pero útil.
     `;
 
-    const model = ai.getGenerativeModel({ 
+    const model = (ai as any).getGenerativeModel({ 
       model: 'gemini-1.5-flash',
       systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
     });

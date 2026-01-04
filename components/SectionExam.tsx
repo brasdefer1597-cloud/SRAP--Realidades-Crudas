@@ -132,14 +132,14 @@ const SectionExam: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6">
-                    <h3 className="text-xl font-bold text-red-400 mb-4">2. SACRIFICIO CONSCIENTE</h3>
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-red-400 mb-4 uppercase tracking-wider">2. SACRIFICIO CONSCIENTE</h3>
                     <p className="text-gray-300 mb-4">¿A qué centro le toca ceder HOY para que los otros dos sobrevivan?</p>
                     
                     <select 
                       value={sacrifice}
                       onChange={e => setSacrifice(e.target.value)}
-                      className="w-full bg-black bg-opacity-50 text-white p-3 rounded-lg border border-red-600 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all"
+                      className="w-full bg-black bg-opacity-50 text-white p-3 rounded-lg border border-red-600 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all outline-none"
                     >
                         <option value="">Elige el sacrificio de hoy...</option>
                         <option value="cabeza">Cabeza: Aceptar caos, dejar de controlar</option>
@@ -148,13 +148,13 @@ const SectionExam: React.FC = () => {
                     </select>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6">
-                    <h3 className="text-xl font-bold text-red-400 mb-4">3. OXÍGENO DE SUPERVIVENCIA</h3>
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-red-400 mb-4 uppercase tracking-wider">3. OXÍGENO DE SUPERVIVENCIA</h3>
                     <p className="text-gray-300 mb-4">¿Qué acción mínima puede dar oxígeno al centro más ahogado?</p>
                     
                     <div className="space-y-3">
                       {OXYGEN_OPTIONS.map(opt => (
-                        <label key={opt} className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${oxygen.includes(opt) ? 'bg-red-900 bg-opacity-40 border border-red-600' : 'bg-gray-700'}`}>
+                        <label key={opt} className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${oxygen.includes(opt) ? 'bg-red-900 bg-opacity-40 border border-red-600' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50 border border-transparent'}`}>
                             <input
                               type="checkbox"
                               checked={oxygen.includes(opt)}
