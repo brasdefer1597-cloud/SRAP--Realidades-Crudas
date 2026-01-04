@@ -10,6 +10,10 @@ export interface AnalysisInput {
 }
 
 export const analyzeMisery = async (data: AnalysisInput): Promise<string> => {
+  if (!ai) {
+    return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
+  }
+
   try {
     const prompt = `
       Actúa como una IA brutalmente honesta y cínica llamada SRAP-AI.
@@ -28,20 +32,14 @@ export const analyzeMisery = async (data: AnalysisInput): Promise<string> => {
       Usa un tono oscuro, filosófico y directo. Nada de "todo va a salir bien".
     `;
 
-    if (!ai) {
-      return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
-    }
-    
-    // Use Flash for fast, direct analysis
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-      config: {
-        systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
-      }
+    const model = ai.getGenerativeModel({ 
+      model: 'gemini-1.5-flash',
+      systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
     });
 
-    return response.text || "La IA se niega a analizar tal nivel de contradicción.";
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text() || "La IA se niega a analizar tal nivel de contradicción.";
   } catch (error) {
     console.error("Error analyzing misery:", error);
     return "Error de conexión. Incluso la IA te ha abandonado hoy.";
@@ -49,6 +47,10 @@ export const analyzeMisery = async (data: AnalysisInput): Promise<string> => {
 };
 
 export const analyzeSynthesis = async (synthesis: string): Promise<string> => {
+  if (!ai) {
+    return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
+  }
+
   try {
     const prompt = `
       Actúa como una IA brutalmente honesta y cínica llamada SRAP-AI.
@@ -65,19 +67,14 @@ export const analyzeSynthesis = async (synthesis: string): Promise<string> => {
       Usa un tono oscuro y directo. Sé implacable pero útil.
     `;
 
-    if (!ai) {
-      return "No hay API Key configurada. Configura GEMINI_API_KEY para activar la IA.";
-    }
-    
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-      config: {
-        systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
-      }
+    const model = ai.getGenerativeModel({ 
+      model: 'gemini-1.5-flash',
+      systemInstruction: "Eres SRAP-AI. No usas emojis amigables. Usas metáforas de guerra y supervivencia.",
     });
 
-    return response.text || "La IA considera tu síntesis demasiado trivial para analizarla.";
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text() || "La IA considera tu síntesis demasiado trivial para analizarla.";
   } catch (error) {
     console.error("Error analyzing synthesis:", error);
     return "Error de conexión. La IA está ocupada con problemas más importantes que el tuyo.";

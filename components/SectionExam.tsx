@@ -21,6 +21,12 @@ const Modal: React.FC<{ analysis: string; onClose: () => void }> = ({ analysis, 
 );
 
 
+const COLOR_MAP: Record<string, { ring: string; text: string; bg: string }> = {
+  blue: { ring: 'ring-blue-400', text: 'text-blue-300', bg: 'bg-blue-900' },
+  red: { ring: 'ring-red-400', text: 'text-red-300', bg: 'bg-red-900' },
+  green: { ring: 'ring-green-400', text: 'text-green-300', bg: 'bg-green-900' },
+};
+
 const SectionExam: React.FC = () => {
   const [bleeding, setBleeding] = useState<string>('');
   const [sacrifice, setSacrifice] = useState<string>('');
@@ -45,10 +51,15 @@ const SectionExam: React.FC = () => {
     }
     setLoading(true);
     setAiAnalysis(null);
-    const result = await analyzeMisery({ bleeding, sacrifice, oxygen });
-    setAiAnalysis(result);
-    setLoading(false);
-    setIsModalOpen(true);
+    try {
+      const result = await analyzeMisery({ bleeding, sacrifice, oxygen });
+      setAiAnalysis(result);
+      setIsModalOpen(true);
+    } catch (error) {
+      alert("Error al conectar con la IA.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAnalyzeSynthesis = async () => {
@@ -58,10 +69,15 @@ const SectionExam: React.FC = () => {
     }
     setSynthesisLoading(true);
     setAiAnalysis(null);
-    const result = await analyzeSynthesis(synthesis);
-    setAiAnalysis(result);
-    setSynthesisLoading(false);
-    setIsModalOpen(true);
+    try {
+      const result = await analyzeSynthesis(synthesis);
+      setAiAnalysis(result);
+      setIsModalOpen(true);
+    } catch (error) {
+      alert("Error al conectar con la IA.");
+    } finally {
+      setSynthesisLoading(false);
+    }
   };
   
   const OXYGEN_OPTIONS = [
@@ -76,10 +92,10 @@ const SectionExam: React.FC = () => {
       <section className="py-12 px-6 max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8 text-red-400">🎯 EXAMEN SRAP - REALIDAD CRUDA</h2>
         
-        <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 border border-red-800">
+        <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 border border-red-800 shadow-xl">
             <div className="text-center mb-8">
-                <div className="breathing-crudo w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-2xl">💀</span>
+                <div className="breathing-crudo w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center bg-red-900 bg-opacity-30">
+                    <span className="text-2xl" role="img" aria-label="Calavera">💀</span>
                 </div>
                 <p className="text-gray-400 italic mb-4">
                     "La iluminación no es paz perpetua. Es saber que el miedo en el pecho, 
@@ -91,8 +107,8 @@ const SectionExam: React.FC = () => {
             </div>
 
             <div className="space-y-6">
-                <div className="bg-gray-800 rounded-xl p-6">
-                    <h3 className="text-xl font-bold text-red-400 mb-4">1. DIAGNÓSTICO CRUDO</h3>
+                <div className="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-red-400 mb-4 uppercase tracking-wider">1. DIAGNÓSTICO CRUDO</h3>
                     <p className="text-gray-300 mb-4">¿Cuál de los tres centros está sangrando MÁS hoy?</p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -100,16 +116,19 @@ const SectionExam: React.FC = () => {
                            {id: 'cabeza', label: 'Cabeza', icon: '🧠', color: 'blue'},
                            {id: 'corazon', label: 'Corazón', icon: '💔', color: 'red'},
                            {id: 'cuerpo', label: 'Cuerpo', icon: '🦶', color: 'green'},
-                        ].map(item => (
-                          <div
-                            key={item.id}
-                            onClick={() => setBleeding(item.id)}
-                            className={`flex items-center space-x-3 p-3 bg-${item.color}-900 bg-opacity-20 rounded-lg cursor-pointer transition-all duration-200 ring-2 ${bleeding === item.id ? `ring-${item.color}-400` : 'ring-transparent'}`}
-                          >
-                              <span className={`text-xl`}>{item.icon}</span>
-                              <span className={`font-bold text-${item.color}-300`}>{item.label}</span>
-                          </div>
-                        ))}
+                        ].map(item => {
+                          const styles = COLOR_MAP[item.color];
+                          return (
+                            <button
+                              key={item.id}
+                              onClick={() => setBleeding(item.id)}
+                              className={`flex items-center space-x-3 p-3 ${styles.bg} bg-opacity-20 rounded-lg cursor-pointer transition-all duration-200 ring-2 ${bleeding === item.id ? styles.ring : 'ring-transparent'} hover:bg-opacity-30`}
+                            >
+                                <span className="text-xl">{item.icon}</span>
+                                <span className={`font-bold ${styles.text}`}>{item.label}</span>
+                            </button>
+                          );
+                        })}
                     </div>
                 </div>
 
