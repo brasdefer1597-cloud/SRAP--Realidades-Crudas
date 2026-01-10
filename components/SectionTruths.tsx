@@ -30,14 +30,14 @@ const SectionTruths: React.FC = () => {
                         <div className="text-4xl mb-2">💔</div>
                         <h3 className="text-xl font-bold text-red-400">EL CORAZÓN ES UN MAL ESTRATEGA</h3>
                     </div>
-                    <div className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-300 text-sm leading-relaxed">
                         Seguir "tu pasión" sin plan es receta para terminar:
                         <ul className="list-disc list-inside mt-2 space-y-1">
                             <li>Con deudas</li>
                             <li>Explotado por quien sí planeó</li>
                             <li>Vendiendo cursos de "vibra alta"</li>
                         </ul>
-                    </div>
+                    </p>
                 </div>
 
                 {/* Cabeza */}
